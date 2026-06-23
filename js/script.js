@@ -1,6 +1,20 @@
 /* ============================================
+   PAGE PRELOADER
+   ============================================ */
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.classList.add('fade-out');
+        // Remove from DOM after fade transition completes
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 500); 
+    }
+});
+/* ============================================
    INITIALIZATION
    ============================================ */
+   
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
