@@ -1828,6 +1828,8 @@ a:hover {
 
 .footer-section ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .footer-section ul li {
@@ -1846,6 +1848,8 @@ a:hover {
 
 .contact-list {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .contact-list li {
@@ -2568,4 +2572,38 @@ a:hover {
     border-top-color: var(--primary-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
+}
+
+/* ============================================
+   INTRO HIGHLIGHTS FIX
+   ============================================ */
+.intro-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.highlight {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.highlight-icon {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.highlight p {
+    margin: 0; /* Removes the default bottom margin from paragraphs */
+    color: var(--text-dark);
+}
+
+.intro-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
