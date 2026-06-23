@@ -514,23 +514,54 @@ function setupExitIntent() {
 /* ============================================
    NEWSLETTER FORM
    ============================================ */
+/* ============================================
+   NEWSLETTER FORM
+   ============================================ */
 function setupNewsletterForm() {
     const newsletterForm = document.getElementById('newsletter-form');
     if (!newsletterForm) return;
     
     newsletterForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = newsletterForm.querySelector('input[type="email"]').value;
+        const emailInput = newsletterForm.querySelector('input[type="email"]');
+        const email = emailInput.value;
+        const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+        
+        // Save locally
         const subscribers = JSON.parse(localStorage.getItem('subscribers') || '[]');
         if (!subscribers.includes(email)) {
             subscribers.push(email);
             localStorage.setItem('subscribers', JSON.stringify(subscribers));
         }
-        showSuccessToast('Thank you for subscribing!');
-        newsletterForm.reset();
+        
+        if (submitBtn) submitBtn.disabled = true;
+
+        // Send EmailJS Notification
+        if (typeof emailjs !== 'undefined' && emailjs.send) {
+            /* 
+               IMPORTANT: Create a new template in EmailJS for the welcome email.
+               Set the "To Email" field in EmailJS to {{user_email}}
+               Replace 'YOUR_NEWSLETTER_TEMPLATE_ID' with your new template ID.
+            */
+            emailjs.send('service_7d3rmkp', 'template_0ividtf', {
+                user_email: email
+            }).then(() => {
+                showSuccessToast('Subscribed successfully! Check your email.');
+                newsletterForm.reset();
+                if (submitBtn) submitBtn.disabled = false;
+            }).catch((error) => {
+                console.error('Newsletter email failed:', error);
+                showSuccessToast('Thank you for subscribing!');
+                newsletterForm.reset();
+                if (submitBtn) submitBtn.disabled = false;
+            });
+        } else {
+            showSuccessToast('Thank you for subscribing!');
+            newsletterForm.reset();
+            if (submitBtn) submitBtn.disabled = false;
+        }
     });
 }
-
 /* ============================================
    TOAST NOTIFICATIONS
    ============================================ */

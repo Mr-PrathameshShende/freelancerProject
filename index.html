@@ -775,6 +775,25 @@
     </div>
 
     <div class="loader" id="loader"></div>
+    <!-- Success Toast Notification (Required for the popup) -->
+    <div class="toast" id="successToast" role="status" aria-live="polite" aria-atomic="true">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message">Message sent successfully! I'll be in touch soon.</span>
+    </div>
+
+    <!-- EmailJS Configuration (Required to send the email) -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            try {
+                emailjs.init({
+                    publicKey: "mb-8UfsGQI6h6YS4Q"
+                });
+            } catch (error) {
+                console.error("EmailJS initialization failed:", error);
+            }
+        })();
+    </script>
 
     <script src="js/script.js" defer></script>
     
