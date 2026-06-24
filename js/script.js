@@ -159,6 +159,8 @@ function setupProjectModal() {
     const stackEl = document.getElementById('modal-display-stack');
     const processEl = document.getElementById('modal-display-process');
     const repoEl = document.getElementById('modal-display-repo');
+    const demoEl = document.getElementById('modal-display-demo');
+    const videoEl = document.getElementById('modal-display-video');
 
     modalTriggers.forEach(trigger => {
         trigger.addEventListener('click', (e) => {
@@ -183,14 +185,32 @@ function setupProjectModal() {
                     });
                 }
 
-                if(repoEl) {
-                    const repoData = dataEl.querySelector('.modal-repo');
-                    if(repoData && repoData.href) {
-                        repoEl.href = repoData.href;
-                        repoEl.style.display = 'inline-block';
-                    } else {
-                        repoEl.style.display = 'none';
-                    }
+                // Handle Repo
+                const repoData = dataEl.querySelector('.modal-repo');
+                if(repoData && repoData.href) {
+                    repoEl.href = repoData.href;
+                    repoEl.style.display = 'inline-block';
+                } else {
+                    repoEl.style.display = 'none';
+                }
+
+                // Handle Demo
+                const demoData = dataEl.querySelector('.modal-demo');
+                if(demoEl && demoData && demoData.href) {
+                    demoEl.href = demoData.href;
+                    demoEl.style.display = 'inline-block';
+                } else if(demoEl) {
+                    demoEl.style.display = 'none';
+                }
+
+                // Handle Video
+                const videoData = dataEl.querySelector('.modal-video');
+                if(videoEl && videoData) {
+                    videoEl.innerHTML = videoData.innerHTML;
+                    videoEl.style.display = 'block';
+                } else if(videoEl) {
+                    videoEl.innerHTML = '';
+                    videoEl.style.display = 'none';
                 }
 
                 projectModal.style.display = 'flex';
@@ -203,6 +223,7 @@ function setupProjectModal() {
         modalClose.addEventListener('click', () => {
             projectModal.style.display = 'none';
             document.body.style.overflow = '';
+            if(videoEl) videoEl.innerHTML = ''; // stops video
         });
     }
 
@@ -210,8 +231,19 @@ function setupProjectModal() {
         if (e.target === projectModal) {
             projectModal.style.display = 'none';
             document.body.style.overflow = '';
+            if(videoEl) videoEl.innerHTML = ''; 
         }
     });
+}
+
+function moveSlide(button, n) {
+    const container = button.parentElement;
+    const slides = container.querySelectorAll('.slide');
+    let activeIndex = Array.from(slides).findIndex(s => s.style.display !== 'none');
+    
+    slides[activeIndex].style.display = 'none';
+    activeIndex = (activeIndex + n + slides.length) % slides.length;
+    slides[activeIndex].style.display = 'block';
 }
 
 /* ============================================
