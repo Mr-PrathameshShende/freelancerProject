@@ -259,7 +259,11 @@ if (phone) phone.addEventListener('blur', () => validatePhone(phone));
     const projectType = document.getElementById('project_type');
     const projectDesc = document.getElementById('projectDescription');
     
-    if (fullName) fullName.addEventListener('blur', () => validateName(fullName));
+    if (fullName) {
+    fullName.addEventListener('input', () => {
+        fullName.value = fullName.value.replace(/[^A-Za-z\s]/g, '');
+    });
+}
     if (email) email.addEventListener('blur', () => validateEmail(email));
     if (projectType) projectType.addEventListener('blur', () => validateSelect(projectType, 'serviceError'));
     if (projectDesc) projectDesc.addEventListener('blur', () => validateProjectDescription(projectDesc));
