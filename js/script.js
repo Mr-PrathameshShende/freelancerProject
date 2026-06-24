@@ -275,8 +275,21 @@ if (phone) phone.addEventListener('blur', () => validatePhone(phone));
 function validateName(input) {
     const error = document.getElementById('fullNameError');
     const value = input.value.trim();
-    if (!value) return showError(input, error, 'Name is required');
-    if (value.length < 2) return showError(input, error, 'Name must be at least 2 characters');
+     if (!value) {
+        return showError(input, error, 'Name is required');
+    }
+
+    // Only letters and spaces allowed
+    const nameRegex = /^[A-Za-z\s]+$/;
+
+    if (!nameRegex.test(value)) {
+        return showError(input, error, 'Name can only contain letters and spaces');
+    }
+
+    if (value.length < 2) {
+        return showError(input, error, 'Name must be at least 2 characters');
+    }
+
     return clearError(input, error);
 }
 
