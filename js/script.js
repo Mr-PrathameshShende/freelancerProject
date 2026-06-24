@@ -261,8 +261,10 @@ if (phone) phone.addEventListener('blur', () => validatePhone(phone));
     
     if (fullName) {
     fullName.addEventListener('input', () => {
-        fullName.value = fullName.value.replace(/[^A-Za-z\s]/g, '');
+        fullName.value = fullName.value.replace(/[^A-Za-z ]/g, '');
     });
+
+    fullName.addEventListener('blur', () => validateName(fullName));
 }
     if (email) email.addEventListener('blur', () => validateEmail(email));
     if (projectType) projectType.addEventListener('blur', () => validateSelect(projectType, 'serviceError'));
@@ -279,15 +281,16 @@ if (phone) phone.addEventListener('blur', () => validatePhone(phone));
 function validateName(input) {
     const error = document.getElementById('fullNameError');
     const value = input.value.trim();
-     if (!value) {
+
+    if (!value) {
         return showError(input, error, 'Name is required');
     }
 
-    // Only letters and spaces allowed
-    const nameRegex = /^[A-Za-z\s]+$/;
+    // Allow only letters and spaces
+    const regex = /^[A-Za-z ]+$/;
 
-    if (!nameRegex.test(value)) {
-        return showError(input, error, 'Name can only contain letters and spaces');
+    if (!regex.test(value)) {
+        return showError(input, error, 'Only alphabets and spaces are allowed');
     }
 
     if (value.length < 2) {
